@@ -3,8 +3,7 @@
 
 #include "vec3f.h"
 
-class Magnetometer
-{
+class Magnetometer {
 public:       
     virtual Vec3f *get_magnetometer() = 0;
 };

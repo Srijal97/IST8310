@@ -21,8 +21,7 @@
 #define IST8310_REGISTER_STR 0x0C
 #define IST8310_REGISTER_AVGCNTL 0x41
 
-enum IST8310AverageY
-{
+enum IST8310AverageY {
     IST8310_NO_AVERAGE_Y = 0x000,
     IST8310_2_AVERAGE_Y = 0x001,
     IST8310_4_AVERAGE_Y = 0x010,
@@ -30,8 +29,7 @@ enum IST8310AverageY
     IST8310_16_AVERAGE_Y = 0x100
 };
 
-enum IST8310AverageXZ
-{
+enum IST8310AverageXZ {
     IST8310_NO_AVERAGE_X_Z = 0x000,
     IST8310_2_AVERAGE_X_Z = 0x001,
     IST8310_4_AVERAGE_X_Z = 0x010,
@@ -39,8 +37,7 @@ enum IST8310AverageXZ
     IST8310_16_AVERAGE_X_Z = 0x100
 };
 
-class IST8310: public Magnetometer
-{
+class IST8310: public Magnetometer {
 public:
     IST8310();
 
@@ -52,9 +49,12 @@ public:
     bool set_average(IST8310AverageY y, IST8310AverageXZ xz);
 
     void set_flip_x_y(bool flip);
+    void set_declination_offset_radians(float declination_radians);
 
     Vec3f *get_raw();
     Vec3f *get_magnetometer();
+
+    float get_heading_degrees();
 
 private:
     bool read();
@@ -67,6 +67,8 @@ private:
     bool write_register(uint8_t reg, uint8_t value);
 
     bool _flip_x_y;
+
+    float _declination_offset_radians = 0.0;
 
     uint8_t _device_id;
     uint8_t _i2c_address;
